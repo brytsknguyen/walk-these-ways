@@ -145,13 +145,22 @@ class RewardThresholdCurriculum(Curriculum):
         # if len(is_success) > 0 and is_success.any():
         #     print("successes")
 
-        self.weights[bin_inds[is_success]] = np.clip(self.weights[bin_inds[is_success]] + 0.2, 0, 1)
+        # print("success", self.weights.shape)
+
+        old_weights = self.weights
+
+        self.weights[bin_inds[is_success]] = np.clip(self.weights[bin_inds[is_success]] - 0.2, 0.2, 1)
         adjacents = self.get_local_bins(bin_inds[is_success], ranges=local_range)
         for adjacent in adjacents:
             #print(adjacent)
             #print(self.grid[:, adjacent])
             adjacent_inds = np.array(adjacent.nonzero()[0])
-            self.weights[adjacent_inds] = np.clip(self.weights[adjacent_inds] + 0.2, 0, 1)
+            self.weights[adjacent_inds] = np.clip(self.weights[adjacent_inds] + 0.2, 0.2, 1)
+
+        delta = (self.weights - old_weights).sum()
+
+        # print("delta: ", delta)
+        assert(delta == 0.0, "curriculum updated")
 
     def log(self, bin_inds, lin_vel_raw=None, ang_vel_raw=None, episode_duration=None):
         self.episode_lin_vel_raw[bin_inds] = lin_vel_raw.cpu().numpy()

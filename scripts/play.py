@@ -30,7 +30,8 @@ def load_policy(logdir):
 
 
 def load_env(label, headless=False):
-    dirs = glob.glob(f"../runs/{label}/*")
+    dirs = glob.glob(f"../runs/{label}/*", recursive=True)
+    print(dirs, f"../runs/{label}/*")
     logdir = sorted(dirs)[0]
 
     with open(logdir + "/parameters.pkl", 'rb') as file:
@@ -60,7 +61,7 @@ def load_env(label, headless=False):
     Cfg.domain_rand.randomize_com_displacement = False
 
     Cfg.env.num_recording_envs = 1
-    Cfg.env.num_envs = 1
+    Cfg.env.num_envs = 69
     Cfg.terrain.num_rows = 5
     Cfg.terrain.num_cols = 5
     Cfg.terrain.border_size = 0
@@ -94,7 +95,7 @@ def play_go1(headless=True):
     import glob
     import os
 
-    label = "gait-conditioned-agility/pretrain-v0/train"
+    label = "gait-conditioned-agility/2025-06-03/train"
 
     env, policy = load_env(label, headless=headless)
 
@@ -107,7 +108,7 @@ def play_go1(headless=True):
     x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 1.5, 0.0, 0.0
     body_height_cmd = 0.0
     step_frequency_cmd = 3.0
-    gait = torch.tensor(gaits["trotting"])
+    gait = torch.tensor(gaits["pronking"])
     footswing_height_cmd = 0.08
     pitch_cmd = 0.0
     roll_cmd = 0.0
