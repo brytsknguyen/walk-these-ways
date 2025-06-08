@@ -94,7 +94,7 @@ class Runner:
         self.num_steps_per_env = RunnerArgs.num_steps_per_env
 
         # init storage and model
-        self.alg.init_storage(self.env.num_train_envs, self.num_steps_per_env, [self.env.num_obs],
+        self.alg.init_storage(self.env.num_envs, self.num_steps_per_env, [self.env.num_obs],
                               [self.env.num_privileged_obs], [self.env.num_obs_history], [self.env.num_actions])
 
         self.tot_timesteps = 0
@@ -116,7 +116,7 @@ class Runner:
                                                              high=int(self.env.max_episode_length))
 
         # split train and test envs
-        num_train_envs = self.env.num_train_envs
+        num_train_envs = self.env.num_envs
 
         obs_dict = self.env.get_observations()  # TODO: check, is this correct on the first step?
         obs, privileged_obs, obs_history = obs_dict["obs"], obs_dict["privileged_obs"], obs_dict["obs_history"]

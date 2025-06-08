@@ -36,18 +36,22 @@ class BaseTask(gym.Env):
         if self.headless == True:
             self.graphics_device_id = -1
 
+        self.num_envs = cfg.env.num_envs
         self.num_obs = cfg.env.num_observations
         self.num_privileged_obs = cfg.env.num_privileged_obs
         self.num_actions = cfg.env.num_actions
 
-        if eval_cfg is not None:
-            self.num_eval_envs = eval_cfg.env.num_envs
-            self.num_train_envs = cfg.env.num_envs
-            self.num_envs = self.num_eval_envs + self.num_train_envs
-        else:
-            self.num_eval_envs = 0
-            self.num_train_envs = cfg.env.num_envs
-            self.num_envs = cfg.env.num_envs
+        self.num_train_envs = self.num_envs
+        self.num_eval_envs = 0
+
+        # if eval_cfg is not None:
+        #     self.num_eval_envs = eval_cfg.env.num_envs
+        #     self.num_train_envs = cfg.env.num_envs
+        #     self.num_envs = self.num_eval_envs + self.num_train_envs
+        # else:
+        #     self.num_eval_envs = 0
+        #     self.num_train_envs = cfg.env.num_envs
+        #     self.num_envs = cfg.env.num_envs
 
         # optimization flags for pytorch JIT
         torch._C._jit_set_profiling_mode(False)

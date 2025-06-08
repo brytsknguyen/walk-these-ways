@@ -61,7 +61,7 @@ def load_env(label, headless=False):
     Cfg.domain_rand.randomize_com_displacement = False
 
     Cfg.env.num_recording_envs = 1
-    Cfg.env.num_envs = 69
+    Cfg.env.num_envs = 5
     Cfg.terrain.num_rows = 5
     Cfg.terrain.num_cols = 5
     Cfg.terrain.border_size = 0
@@ -95,7 +95,7 @@ def play_go1(headless=True):
     import glob
     import os
 
-    label = "gait-conditioned-agility/2025-06-03/train"
+    label = "gait-conditioned-agility/2025-06-08/train"
 
     env, policy = load_env(label, headless=headless)
 
